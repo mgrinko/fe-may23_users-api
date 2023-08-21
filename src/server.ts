@@ -3,7 +3,7 @@ import cors from 'cors';
 import { User } from './types';
 
 const CLIENT_URL = 'http://localhost:3000';
-const PORT = 5000;
+const PORT = 5000 || process.env.port;
 const app = express();
 
 app.use(cors({ origin: CLIENT_URL }));
