@@ -39,6 +39,8 @@ app.get('/users', (req, res) => {
 app.post('/users', express.json(), (req, res) => {
   const { name, carColorId } = req.body;
 
+  console.log({ name, carColorId });
+
   if (!userService.validate({ name, carColorId })) {
     res.sendStatus(422);
 

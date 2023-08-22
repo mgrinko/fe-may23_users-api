@@ -33,8 +33,8 @@ function create({ name, carColorId }: Omit<User, 'id'>): User {
 }
 
 function validate({ name, carColorId }: Omit<User, 'id'>): boolean {
-  return typeof name !== 'string'
-      || typeof carColorId !== 'number';
+  return typeof name === 'string'
+      && typeof carColorId === 'number';
 }
 
 export const userService = { validate, getAll, getById, create };
