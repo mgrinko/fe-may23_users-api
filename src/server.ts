@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import { User } from './types';
+import { userService } from './services/user.service';
 
 const CLIENT_URL = 'http://localhost:3000';
 const PORT = 5000;
@@ -19,18 +20,6 @@ const colors = [
   { id: 7, name: 'Yellow' },
 ];
 
-function getMaxId(users: User[]): number {
-  const ids = users.map(user => user.id);
-
-  return Math.max(...ids);
-}
-
-const users = [
-  { id: 1, name: 'Joe Biden', carColorId: 5 },
-  { id: 2, name: 'Elon Musk', carColorId: 4 },
-  { id: 3, name: 'Pan Roman', carColorId: 2 },
-];
-
 app.get('/', (req, res) => {
   res.sendFile(path.resolve('public', 'index.html'));
 });
@@ -40,34 +29,28 @@ app.get('/colors', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
+  const users = userService.getAll();
+
   res.send(users);
 });
 
 app.post('/users', express.json(), (req, res) => {
   const { name, carColorId } = req.body;
 
-  if (typeof name !== 'string'
-    || typeof carColorId !== 'number'
-  ) {
+  if (!userService.validate({ name, carColorId })) {
     res.sendStatus(422);
+
     return;
   }
 
-  const newUser = {
-    id: getMaxId(users) + 1,
-    name,
-    carColorId,
-  };
+  const newUser = userService.create({ name, carColorId });
 
-  users.push(newUser);
-
-  res.statusCode = 201;
-  res.send(newUser);
+  res.status(201).send(newUser);
 });
 
 app.get('/users/:userId', (req, res) => {
   const { userId } = req.params;
-  const user = users.find(({ id }) => id === +userId)
+  const user = userService.getById(+userId);
 
   if (!user) {
     res.sendStatus(404);
