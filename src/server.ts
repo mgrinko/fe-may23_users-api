@@ -1,9 +1,10 @@
+import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import { User } from './types';
 
 const CLIENT_URL = 'http://localhost:3000';
-const PORT = 5000 || process.env.port;
+const PORT = 5000;
 const app = express();
 
 app.use(cors({ origin: CLIENT_URL }));
@@ -29,6 +30,10 @@ const users = [
   { id: 2, name: 'Elon Musk', carColorId: 4 },
   { id: 3, name: 'Pan Roman', carColorId: 2 },
 ];
+
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve('public', 'index.html'));
+});
 
 app.get('/colors', (req, res) => {
   res.send(colors);
