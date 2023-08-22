@@ -1,11 +1,13 @@
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
-import { User } from './types';
+import dotenv from 'dotenv';
 import { userService } from './services/user.service';
 
-const CLIENT_URL = 'http://localhost:3000';
-const PORT = 5000;
+dotenv.config();
+
+const CLIENT_URL = process.env.CLIENT_URL;
+const PORT = process.env.PORT;
 const app = express();
 
 app.use(cors({ origin: CLIENT_URL }));
