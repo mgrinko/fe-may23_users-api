@@ -1,10 +1,11 @@
 import { Sequelize } from 'sequelize-typescript';
-import { Color, User } from '../models';
+import * as models from '../models';
 
-const URI = 'postgres://misha:fvdSZjXY1RvCc3KLbeVvTmegj4kPkOtc@dpg-cjk5eelk5scs73a6j2s0-a.frankfurt-postgres.render.com/users_db_bwnm';
+const { DB_PASSWORD, DB_HOST, DB_NAME, DB_USER } = process.env;
+const URI = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`;
 
 export const sequelize = new Sequelize(URI, {
-  models: [Color, User],
+  models: Object.values(models),
   dialectOptions: {
     ssl: true,
   }

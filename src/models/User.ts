@@ -1,4 +1,4 @@
-import { AllowNull, AutoIncrement, BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { Color } from './Color';
 import { Optional } from 'sequelize';
 
@@ -16,14 +16,6 @@ export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {
   timestamps: false,
 })
 export class User extends Model<UserAttributes, UserCreationAttributes> {
-  // @PrimaryKey
-  // @AllowNull(false)
-  // @AutoIncrement
-  // @Column({
-  //   type: DataType.NUMBER
-  // })
-  // id: number;
-  
   @Column
   name: string;
 
