@@ -3,7 +3,7 @@ import { Color, User } from '../models';
 
 const URI = 'postgres://misha:fvdSZjXY1RvCc3KLbeVvTmegj4kPkOtc@dpg-cjk5eelk5scs73a6j2s0-a.frankfurt-postgres.render.com/users_db_bwnm';
 
-const sequelize = new Sequelize(URI, {
+export const sequelize = new Sequelize(URI, {
   models: [Color, User],
   dialectOptions: {
     ssl: true,

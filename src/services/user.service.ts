@@ -1,40 +1,23 @@
-import { User } from '../types';
+import { User, UserCreationAttributes } from '../models';
 
-const users = [
-  { id: 1, name: 'Joe Biden', carColorId: 5 },
-  { id: 2, name: 'Elon Musk', carColorId: 4 },
-  { id: 3, name: 'Pan Roman', carColorId: 2 },
-];
-
-function getMaxId(users: User[]): number {
-  const ids = users.map(user => user.id);
-
-  return Math.max(...ids);
+function getAll() {
+  return User.findAll({
+    where: {
+      id: 1,
+    },
+    order: [['id', 'desc'], 'name'],
+  });
 }
 
-function getAll(): User[] {
-  return users;
+function getById(id: number) {
+  return User.findByPk(id);
 }
 
-function getById(id: number): User | undefined {
-  return users.find(user => user.id === id);
+function create({ name, carColorId }: UserCreationAttributes) {
+  return User.create({ name, carColorId })
+    .catch(error => {
+      console.log('Unable to create User', error)
+    })
 }
 
-function create({ name, carColorId }: Omit<User, 'id'>): User {
-  const newUser = {
-    id: getMaxId(users) + 1,
-    name,
-    carColorId,
-  };
-
-  users.push(newUser);
-
-  return newUser;
-}
-
-function validate({ name, carColorId }: Omit<User, 'id'>): boolean {
-  return typeof name === 'string'
-      && typeof carColorId === 'number';
-}
-
-export const userService = { validate, getAll, getById, create };
+export const userService = { getAll, getById, create };
