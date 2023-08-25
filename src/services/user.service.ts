@@ -2,7 +2,7 @@ import { User, UserCreationAttributes } from '../models';
 
 function getAll() {
   return User.findAll({
-    order: [['id', 'ask'], 'name'],
+    order: [['id', 'ASC'], 'name']
   });
 }
 
