@@ -1,21 +1,25 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { userRouter } from './routers/user.router';
-import { colorRouter } from './routers/color.router';
 
 dotenv.config();
+
+import { connect } from './utils/db';
+
+connect();
+
+import { userRouter } from './routes/user.router';
+import { colorRouter } from './routes/color.router';
+
 
 const CLIENT_URL = process.env.CLIENT_URL;
 const PORT = process.env.PORT;
 
-const app = express();
+const app = express()
+  .use(cors({ origin: CLIENT_URL }))
+  .use(express.json());
 
-app.use(cors({
-  origin: CLIENT_URL
-}));
-
-app.use('/users', express.json(), userRouter);
+app.use('/users', userRouter);
 app.use('/colors', colorRouter);
 
 app.listen(PORT, () => {
