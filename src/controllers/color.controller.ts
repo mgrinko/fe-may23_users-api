@@ -1,8 +1,8 @@
 import { colorService } from '../services/color.service';
 import { ControllerAction } from '../types';
 
-const getAll: ControllerAction = (req, res) => {
-  const colors = colorService.getAll();
+const getAll: ControllerAction = async (req, res) => {
+  const colors = await colorService.getAll();
 
   res.send(colors);
 };

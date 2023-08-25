@@ -1,40 +1,18 @@
-import { User } from '../types';
+import { Color } from '../models/Color';
+import { User, UserCreationAttributes } from '../models/User';
 
-const users = [
-  { id: 1, name: 'Joe Biden', carColorId: 5 },
-  { id: 2, name: 'Elon Musk', carColorId: 4 },
-  { id: 3, name: 'Pan Roman', carColorId: 2 },
-];
-
-function getMaxId(users: User[]): number {
-  const ids = users.map(user => user.id);
-
-  return Math.max(...ids);
+function getAll() {
+  return User.findAll();
 }
 
-function getAll(): User[] {
-  return users;
+function getById(id: number) {
+  return User.findByPk(id, {
+    include: Color,
+  });
 }
 
-function getById(id: number): User | undefined {
-  return users.find(user => user.id === id);
+function create({ name, carColorId }: UserCreationAttributes) {
+  return User.create({ name, carColorId });
 }
 
-function create({ name, carColorId }: Omit<User, 'id'>): User {
-  const newUser = {
-    id: getMaxId(users) + 1,
-    name,
-    carColorId,
-  };
-
-  users.push(newUser);
-
-  return newUser;
-}
-
-function validate({ name, carColorId }: Omit<User, 'id'>): boolean {
-  return typeof name === 'string'
-      && typeof carColorId === 'number';
-}
-
-export const userService = { validate, getAll, getById, create };
+export const userService = { getAll, getById, create };
