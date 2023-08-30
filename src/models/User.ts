@@ -1,4 +1,4 @@
-import { BelongsTo, Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { AllowNull, BelongsTo, Column, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { Color } from './Color';
 import { Optional } from 'sequelize';
 
@@ -16,6 +16,7 @@ export interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {
   timestamps: false,
 })
 export class User extends Model<UserAttributes, UserCreationAttributes> {
+  @AllowNull(false)
   @Column
   name: string;
 

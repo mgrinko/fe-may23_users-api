@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 import { Color, User } from './models';
 import { sequelize, connect } from './utils/db';
 
