@@ -6,11 +6,14 @@ const { DataTypes } = require('sequelize');
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.addColumn('users', 'created_at', {
-      defaultValue: Sequelize.NOW,
+      defaultValue: Sequelize.fn('now'),
+      allowNull: false,
       type: DataTypes.DATE,
     });
+
     await queryInterface.addColumn('users', 'updated_at', {
-      defaultValue: Sequelize.NOW,
+      defaultValue: Sequelize.fn('now'),
+      allowNull: false,
       type: DataTypes.DATE,
     });
   },
