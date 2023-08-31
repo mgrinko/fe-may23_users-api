@@ -1,6 +1,6 @@
 import { Color } from '../models';
 
-function getAll() {
+function getAll({ offset, limit, sort }) {
   return Color.findAll();
 }
 
