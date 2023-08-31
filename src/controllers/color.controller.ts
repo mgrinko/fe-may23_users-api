@@ -4,6 +4,8 @@ import { ControllerAction } from '../types';
 
 // api/colors?offset=5&limit=5&sort=name
 const getAll: ControllerAction = async (req, res) => {
+  // some changes
+
   const {
     offset = '0',
     limit = '2',
